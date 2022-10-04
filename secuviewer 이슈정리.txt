@@ -1,0 +1,51 @@
+1차 Prototype
+
+Server
+- 계정관리
+  a. hidden master, admin, client
+  b. hidden master, admin : 사용자 관리, ipcam 리스트 관리, Cam 설정 관리, 비디오 저장 설정 관리
+  c. client : 클라이언트 viewer 접근
+
+- IP Cam 관리
+  a. onvif cam 검색
+  b. onvif cam 리스트 등록/관리
+
+- 비디오 저장관리
+  a. h.264 저장
+  b. 이력관리(size, 시간)
+  c. 날짜, 시간별 컨텐츠 접근 (no seeking)
+
+Client
+- 멀티 뷰어 (4ch / ipcam streaming)
+- 카메라 제어 (pan/tilt/zoom)
+- 저장된 비디오 재생 (1ch / server streaming) 
+- 로그인
+
+
+2차 
+
+Server
+
+- IP Cam 
+  a. 이벤트 제어 (이벤트 연결, DB 저장, 컨텐츠 검색,, 모션, 연결 손실, 연결 복구)
+
+- 비디오 저장관리
+  a. 세부 검색(날짜, 시간(분))
+  b. 채널 상세보기 (하루치 타임라인 생성 , 이벤트 연동 표시)
+  c. 재생 옵션(seeking, 재생속도)
+ 
+Client
+- 멀티 뷰어 (36ch) 
+- 뷰어 레이아웃 선택
+- 각 채널 화면 라벨링 관리
+- Viewer IP Cam 관리 (ip cam streaming)
+
+
+3차 
+
+- Server / Client 시스템 제어(PC)
+- 멀티 채널 녹화영상 동시 재생 (layout 변경)
+- 클라이언트 채널 상세보기
+- 이벤트 알람 옵션 추가, 제어(팝업, 소리)
+- ip cam 세부 세팅(해상도, fps, 채도, 명도)
+- 녹화 스케쥴 옵션
