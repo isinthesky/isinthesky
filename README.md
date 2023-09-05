@@ -7,7 +7,6 @@
 MFC, Winform, WPF UI 와 DirectX, DirectShow, Filter, FFmpeg을 다뤘습니다.<br>
 **이제는 Web 세상에서 파이팅 해보겠습니다.**
 
-
 ## 방향
 사람들, 우리 공동체의 삶의 질, 행복에 기여하는 사람이고 싶습니다.<br>
 제 역할을 충실히 하고 주변을 살필 수 있는 사람이고 싶습니다.
