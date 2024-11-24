@@ -4,7 +4,7 @@
 
 ## 직업
 그동안 윈도우 응용프로그래머로 C++과 C#을 사용하며 장비 제어와 미디어 관련 개발 업무를 해왔습니다<br>
-MFC, Winform, WPF UI 와 DirectX, DirectShow, Filter, FFmpeg을 다뤘습니다.<br>
+MFC, Winform, WPF UI 와 DirectX, FFmpeg, DirectShow, Filter를 다뤘습니다.<br>
 **이제는 Web 세상에서 파이팅 해보겠습니다.**
 
 ## 방향
