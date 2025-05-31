@@ -187,15 +187,15 @@ git commit -m "refactor: 리팩토링 - 에러 핸들링 개선"
 - root/src/domain/CLAUDE.md
   - 도메인 관심사, API flow, 트랜잭션 관리
 
-#### B-3. Claude.md 파일 사용 가이드
+#### B-3. CLAUDE.md 파일 사용 가이드
 
 ```mermaid
 graph TD
-    A[프로젝트 Root/] --> B[claude.md]
+    A[프로젝트 Root/] --> B[CLAUDE.md]
     A --> C[src/]
-    C --> D[src/claude.md]
+    C --> D[src/CLAUDE.md]
     C --> E[src/domain/]
-    E --> F[src/domain/claude.md]
+    E --> F[src/domain/CLAUDE.md]
     
     B --> B1[프로젝트 개요]
     B --> B2[목표 정의]
