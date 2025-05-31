@@ -154,7 +154,7 @@ git commit -m "refactor: 리팩토링 - 에러 핸들링 개선"
 
 - CLAUDE.md 파일 체계로 컨텍스트 관리
 
-  - link : [공식문서 URL Link](https://docs.anthropic.com/ko/docs/claude-code/memory#claude%EA%B0%80-%EB%A9%94%EB%AA%A8%EB%A6%AC%EB%A5%BC-%EC%B0%BE%EB%8A%94-%EB%B0%A9%EB%B2%95)
+  - link : [claude-code memory](https://docs.anthropic.com/ko/docs/claude-code/memory#claude%EA%B0%80-%EB%A9%94%EB%AA%A8%EB%A6%AC%EB%A5%BC-%EC%B0%BE%EB%8A%94-%EB%B0%A9%EB%B2%95)
   - **CLAUDE.md에 작성된 파일은 최대 5단계 깊이까지 추가 파일을 재귀적으로 가져올 수 있습니다.** /memory 명령을 실행하여 로드된 메모리 파일을 확인할 수 있습니다.
   - Claude Code를 실행하고 _foo/CLAUDE.md_와 foo/bar/CLAUDE.md 모두에 메모리가 있는 대규모 저장소에서 작업할 때 특히 편리합니다.
 
