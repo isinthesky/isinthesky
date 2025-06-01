@@ -132,7 +132,7 @@
 - **에너지 관리의 중요성**: 피곤할 때일수록 더 구조화된 접근 필요, 더욱더 나를 챙겨야 한다.
   - ⚠️ AI는 잘못이 없다.
   - ✅ 나의 스트레스와 수면, 피로, 집중력 관리의 실패
-  - 🔔 https://youtu.be/1G0MyQZ8rHM?si=aMGtNhKSgA_PR8-N&t=581
+  - 🔔 [장동선의 궁금한 뇌 - 스트레스와 집중력 관리](https://youtu.be/1G0MyQZ8rHM?si=aMGtNhKSgA_PR8-N&t=581)
 
 #### 추천
 
@@ -168,7 +168,7 @@ git commit -m "refactor: 리팩토링 - 에러 핸들링 개선"
 
   - link : https://docs.cursor.com/context/rules#rule-structure
 
-#### B-1. CLAUDE.md 파일 종류
+#### A-1. CLAUDE.md 파일 종류
 
 - user.CLAUDE.md(개인 설정)
   - 한국어 답변
@@ -184,7 +184,7 @@ git commit -m "refactor: 리팩토링 - 에러 핸들링 개선"
   - db access
   - 보안 환경
 
-#### B-2. 계층적 문서 구조
+#### A-2. 계층적 문서 구조
 
 - root/CLAUDE.md
   - 프로젝트 개요, 목표, 아키텍쳐
@@ -193,7 +193,7 @@ git commit -m "refactor: 리팩토링 - 에러 핸들링 개선"
 - root/src/domain/CLAUDE.md
   - 도메인 구현내용, API flow, 트랜잭션 관리
 
-#### B-3. CLAUDE.md 파일 사용 가이드
+#### A-3. CLAUDE.md 파일 사용 가이드
 
 ```mermaid
 graph TD
@@ -224,9 +224,9 @@ graph TD
     class B1,B2,B3,B4,D1,D2,D3,D4,F1,F2,F3 content
 ```
 
-### C. **MSA 환경에서의 위력**
+### B. **MSA 환경에서의 위력**
 
-#### C-1. 사전작업
+#### B-1. 사전작업
 
 - **서버별 역할 정의**
 
@@ -257,17 +257,19 @@ sequenceDiagram
     Frontend-->>User: 결과 표시
 ```
 
-- **서비스 단위 고민**
+#### B-2. 서비스 단위 고민
 
-  - 새로운 기능 도입: 과금 전용 API 기능은 어떻게?
-    - 과금 전용 Backend Server 구축? 기존 메인서버에 추가?
-  - 서버간의 연결문제: API interface 간의 문제는 어떻게?
-    - Frontend server에서 수정 해야할까?
-    - Backend Server에서 수정하는게 좋을까?
-  - DB Server Redis Cache
-    - 각각 서버마다 만들어서 쓸까?
-    - 캐시 서버를 같이 쓸까? 같이 쓴다면 각 서버가 어떤 규칙으로 Key Value에 접근할까?
-  - 배포 단위에서의 고민: MSA에서 Docker 설정 등등
+- 새로운 기능 도입: 과금 전용 API 기능은 어떻게?
+  - 과금 전용 Backend Server 구축? 기존 메인서버에 추가?
+- 서버간의 연결문제: API interface 간의 문제는 어떻게?
+  - Frontend server에서 수정 해야할까?
+  - Backend Server에서 수정하는게 좋을까?
+- DB Server Redis Cache
+  - 각각 서버마다 만들어서 쓸까?
+  - 캐시 서버를 같이 쓸까? 같이 쓴다면 각 서버가 어떤 규칙으로 Key Value에 접근할까?
+- 배포 단위에서의 고민: MSA에서 Docker 설정 등등
+
+#### B-3. API 인터페이스 설계 전략
 
 ```mermaid
 flowchart TD
@@ -285,6 +287,8 @@ flowchart TD
     D --> D3[단점: 서버 부하 증가]
     D --> D4[단점: 배포 절차 복잡화]
 ```
+
+---
 
 ## GPT가 발표 문서 작성중에 전달한 통찰
 
