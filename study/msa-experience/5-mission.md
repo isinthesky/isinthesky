@@ -1,4 +1,4 @@
-# 내가 앞으로 해결해야할 미션 (MSA 환경에서 AI 스케줄링 Transaction 문제)
+# 내가 앞으로 해결해야할 미션 (MSA 환경에서 ACID 보장 Transaction 문제)
 
 ## 개요
 
@@ -191,56 +191,7 @@ sequenceDiagram
 - 사용자에게 결과 전달 불가
 - **결과**: 작업 완료됐지만 사용자는 결과 받지 못함
 
-### 시나리오 4: 다중 서비스 장애 체인
-
-```mermaid
-graph TB
-    subgraph "장애 전파 체인"
-        subgraph "T+0: 초기 상태"
-            Normal[모든 서비스 정상]
-        end
-        
-        subgraph "T+8h: AI 처리 시작"
-            AIStart[AI Service: 작업 시작]
-            StorageDown[Storage Service: 장애 발생]
-        end
-        
-        subgraph "T+8h+5m: 장애 전파"
-            AIRetry[AI Service: Storage 재시도<br/>연결 타임아웃 증가]
-            AuthSlow[Auth Service: 과부하<br/>Internal API 검증 지연]
-            NotificationFail[Notification Service:<br/>의존성 장애로 알림 실패]
-        end
-        
-        subgraph "T+8h+10m: 시스템 전체 영향"
-            SystemDown[전체 시스템 응답 지연<br/>새로운 요청 처리 불가]
-            UserComplaint[사용자 불만: 결제했지만<br/>서비스 이용 불가]
-        end
-    end
-    
-    Normal --> AIStart
-    AIStart --> StorageDown
-    StorageDown --> AIRetry
-    AIRetry --> AuthSlow
-    AIRetry --> NotificationFail
-    AuthSlow --> SystemDown
-    NotificationFail --> UserComplaint
-    
-    style StorageDown fill:#ffcdd2,color:#000
-    style AIRetry fill:#ffcdd2,color:#000
-    style AuthSlow fill:#ffcdd2,color:#000
-    style NotificationFail fill:#ffcdd2,color:#000
-    style SystemDown fill:#ffcdd2,color:#000
-    style UserComplaint fill:#ffcdd2,color:#000
-```
-
-**장애 전파 과정:**
-1. **Storage Service 다운** → AI 처리 결과 저장 불가
-2. **AI Service 과부하** → Storage 재연결 시도로 자원 소모
-3. **Auth Service 지연** → Internal API 검증 요청 급증
-4. **Notification Service 실패** → 사용자 알림 전송 불가
-5. **전체 시스템 영향** → 새로운 사용자 요청 처리 지연
-
-### 시나리오 5: 데이터 일관성 문제
+### 시나리오 4: 데이터 일관성 문제
 
 ```mermaid
 graph TB
