@@ -73,10 +73,10 @@ graph TB
 ### 서비스별 URL 패턴
 
 | 서비스 | URL 패턴 | 역할 | api url 예시 | back office page url  예시
-|--------|----------|------|------|---|
+|--------|----------|-------------|------|---|
 | **Main API** | `/api/v1/main/*` | 핵심 비즈니스 로직 | `/api/v1/main/products`, `/api/v1/main/processing` | `/page/main/dashboard`, `/page/main/logs/` |
 | **Auth** | `/api/v1/auth/*` | 인증/인가 | `/api/v1/auth/login`, `/api/v1/auth/users` | `/page/auth/users`, `/page/auth/roles` |
-| **Notification** | `/api/v1/notification/*` | 알림 처리 | `/api/v1/notification/send`, `/api/v1/notification/history` | `/page/notification/templates`, `/page/notification/logs` |
+| **Notification** | `/api/v1/notification/*` | 알림 처리 | `/api/v1/notification/send`, `/api/v1/notification/history` | `/page/notification/logs` |
 | **Storage** | `/api/v1/storage/*` | 파일 관리 | `/api/v1/storage/upload`, `/api/v1/storage/download` | `/page/storage/files`, `/page/storage/quota` |
 | **AI** | `/api/v1/ai/*` | AI 연산 | `/api/v1/ai/predict`, `/api/v1/ai/train` | `/page/ai/models`, `/page/ai/metrics` |
 
