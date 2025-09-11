@@ -199,9 +199,9 @@ graph LR
 ### 사례 2: polygom (생성형 AI 서비스)
 
 - 생성형 AI GPU 서버가 최소 10대 이상 상시 실행 중
-- 모델 신규 버전/신규 기능 추가가 빈번하여, GPU 서버의 scale-out 및 롤아웃(카나리/블루-그린 등)에 유연하게 대응 필요
+- AI 모델의 버전 추가, 수정이 빈번하여, GPU 서버의 scale out등 유연하게 대응 필요
 - 인증, 스토리지의 공통 규칙만 표준화하면, 서비스 도메인 서버를 상황에 맞게 손쉽게 추가/확장 가능
-  - 예: AI Photobooth, AI Product Image, AI RMBG API 서버 등
+  - 예: AI Photobooth Service, AI Product Image Service, AI 배경제거 API 서비스 등
 
 ### 핵심 판단
 
