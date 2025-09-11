@@ -21,10 +21,10 @@ graph LR
     Cookie --> CookieFeatures
     Header --> HeaderFeatures
     
-    style Cookie fill:#e8f5e9
-    style Header fill:#fff3e0
-    style CookieFeatures fill:#f3e5f5
-    style HeaderFeatures fill:#e0f2f1
+    style Cookie fill:#e8f5e9,color:#000
+    style Header fill:#fff3e0,color:#000
+    style CookieFeatures fill:#f3e5f5,color:#000
+    style HeaderFeatures fill:#e0f2f1,color:#000
 ```
 
 ### CSRF 보안 차이점 상세 예시
@@ -63,9 +63,9 @@ Cookie Token은 웹 브라우저 환경에서 가장 자연스러운 인증 방�
 ```mermaid
 sequenceDiagram
     participant Browser as 브라우저
-    participant Gateway as Nginx Gateway
+    participant Gateway as Main API Service
     participant Auth as Auth Service
-    participant Main as Main API Service
+    participant API as Product API Server
     
     Browser->>Gateway: POST /api/v1/auth/login
     Gateway->>Auth: 요청 전달
@@ -78,8 +78,8 @@ sequenceDiagram
     Browser->>Gateway: GET /api/v1/main/products<br/>(Cookie 자동 첨부)
     Gateway->>Auth: 토큰 검증 요청
     Auth->>Gateway: 검증 결과
-    Gateway->>Main: 인증된 요청 전달
-    Main->>Gateway: 응답 데이터
+    Gateway->>API: 인증된 요청 전달
+    API->>Gateway: 응답 데이터
     Gateway->>Browser: 최종 응답
 ```
 
@@ -90,25 +90,20 @@ graph TB
     subgraph "Cookie Token의 한계"
         Problem1[서버 간 통신 불가<br/>Cookie는 브라우저 전용]
         Problem2[도메인 제한<br/>다른 도메인 간 공유 어려움]
-        Problem3[모바일 앱 지원 제한<br/>네이티브 앱에서 복잡함]
     end
     
     subgraph "해결 방안"
         Solution1[Internal API Token<br/>서버 간 통신용 별도 토큰]
         Solution2[Token Extraction<br/>Cookie에서 토큰 추출하여 Header로 변환]
-        Solution3[Hybrid Approach<br/>클라이언트별 다른 방식 적용]
     end
     
     Problem1 --> Solution1
     Problem2 --> Solution2
-    Problem3 --> Solution3
     
-    style Problem1 fill:#ffcdd2
-    style Problem2 fill:#ffcdd2
-    style Problem3 fill:#ffcdd2
-    style Solution1 fill:#c8e6c9
-    style Solution2 fill:#c8e6c9
-    style Solution3 fill:#c8e6c9
+    style Problem1 fill:#ffcdd2,color:#000
+    style Problem2 fill:#ffcdd2,color:#000
+    style Solution1 fill:#c8e6c9,color:#000
+    style Solution2 fill:#c8e6c9,color:#000
 ```
 
 ## Header Token (Bearer Token) 활용법
@@ -172,40 +167,11 @@ graph LR
         Cons[단점<br/>• 토큰 노출 위험<br/>• 의존성 증가<br/>• 성능 오버헤드]
     end
     
-    style Client fill:#e1f5fe
-    style MainAPI fill:#e8f5e9
-    style NotificationAPI fill:#f3e5f5
-    style Pros fill:#c8e6c9
-    style Cons fill:#ffcdd2
-```
-
-### Token Exchange 패턴
-
-서비스별로 다른 토큰을 사용하여 보안을 강화하는 패턴입니다.
-
-```mermaid
-sequenceDiagram
-    participant Client as 클라이언트
-    participant Gateway as Gateway
-    participant Auth as Auth Service
-    participant Main as Main API
-    participant AI as AI Service
-    
-    Client->>Gateway: Authorization: Bearer USER_TOKEN
-    Gateway->>Auth: 토큰 검증 요청
-    Auth->>Gateway: 사용자 정보 반환
-    
-    Gateway->>Main: X-User-ID: 123<br/>X-Service-Token: INTERNAL_TOKEN
-    
-    Main->>Auth: AI 서비스용 토큰 요청<br/>{"service": "ai", "user": 123}
-    Auth->>Main: AI_SERVICE_TOKEN 발급
-    
-    Main->>AI: Authorization: Bearer AI_SERVICE_TOKEN
-    AI->>Main: AI 처리 결과
-    Main->>Gateway: 최종 결과
-    Gateway->>Client: 응답
-    
-    Note over Auth,AI: 각 서비스마다 다른 토큰 사용
+    style Client fill:#e1f5fe,color:#000
+    style MainAPI fill:#e8f5e9,color:#000
+    style NotificationAPI fill:#f3e5f5,color:#000
+    style Pros fill:#c8e6c9,color:#000
+    style Cons fill:#ffcdd2,color:#000
 ```
 
 ## 하이브리드 접근법
@@ -244,12 +210,12 @@ graph TB
     AdminPanel -->|Cookie Token| AuthAdmin
     AdminPanel -->|Cookie Token| StorageAdmin
         
-    style MainAPI fill:#e8f5e9
-    style AuthAPI fill:#e8f5e9
-    style StorageAPI fill:#e8f5e9
-    style MainAdmin fill:#f3e5f5
-    style AuthAdmin fill:#f3e5f5
-    style StorageAdmin fill:#f3e5f5
+    style MainAPI fill:#e8f5e9,color:#000
+    style AuthAPI fill:#e8f5e9,color:#000
+    style StorageAPI fill:#e8f5e9,color:#000
+    style MainAdmin fill:#f3e5f5,color:#000
+    style AuthAdmin fill:#f3e5f5,color:#000
+    style StorageAdmin fill:#f3e5f5,color:#000
 ```
 
 ### API 라우터 인증 방식
@@ -326,11 +292,11 @@ graph TB
     
     TokenScopes --> ServiceGuard
     
-    style User fill:#e1f5fe
-    style MainPerms fill:#e8f5e9
-    style StoragePerms fill:#fff3e0
-    style AIPerms fill:#f3e5f5
-    style NotificationPerms fill:#e0f2f1
+    style User fill:#e1f5fe,color:#000
+    style MainPerms fill:#e8f5e9,color:#000
+    style StoragePerms fill:#fff3e0,color:#000
+    style AIPerms fill:#f3e5f5,color:#000
+    style NotificationPerms fill:#e0f2f1,color:#000
 ```
 
 ### 토큰 스코프 관리

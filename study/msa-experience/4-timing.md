@@ -70,10 +70,10 @@ graph LR
     Monitor --> Queue3
     Queue3 --> Trigger
     
-    style Queue1 fill:#fff3e0
-    style Queue2 fill:#e8f5e9
-    style Queue3 fill:#c8e6c9
-    style Trigger fill:#ffcdd2
+    style Queue1 fill:#fff3e0,color:#000
+    style Queue2 fill:#e8f5e9,color:#000
+    style Queue3 fill:#c8e6c9,color:#000
+    style Trigger fill:#ffcdd2,color:#000
 ```
 
 ## 3. JWT 인증 토큰 만료 문제

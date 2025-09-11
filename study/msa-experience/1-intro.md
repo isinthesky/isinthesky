@@ -2,9 +2,9 @@
 
 ## msa를 선택하는 기본 개념
 
-### 슈퍼 web 서버
+### 1. Monolith 아키텍처
 
-main route 기능, auth 기능, noti 기능, storage 기능, ai gpu 연산 기능
+슈퍼 web 서버: main route 기능, auth 기능, noti 기능, storage 기능, ai gpu 연산 기능
 
 #### 1. 단점
 - scale up은 할 수 있지만 scale out은 어렵다.
@@ -17,32 +17,6 @@ main route 기능, auth 기능, noti 기능, storage 기능, ai gpu 연산 기�
 - 단순한 배포: 하나의 서버만 관리하면 됨
 - 빠른 초기 개발: 프로토타입 및 MVP 구현에 유리
 - 트랜잭션 처리: 단일 DB 내에서 ACID 보장이 쉬움
-
-
-### msa 환경 api server
-
-main api server, auth server, noti server, storage server ai gpu server
-
-#### 1. 장점
-
-- **독립적 확장**: 트래픽에 따라 서비스별 스케일링 가능
-- **기술 스택 자유도**: 각 서비스마다 최적화된 기술 선택 가능
-- **장애 격리**: 한 서비스 장애가 전체 시스템에 미치는 영향 최소화
-- **팀별 개발**: 서비스 경계에 따른 독립적 개발/배포
-- **데이터 격리**: 각 서비스가 독립적인 데이터베이스 소유
-
-#### 2. 단점
-
-- **네트워크 복잡성**: 서비스 간 통신으로 인한 레이턴시 증가
-- **분산 시스템 복잡성**: 트랜잭션, 일관성 보장의 어려움
-- **운영 오버헤드**: 다수의 서비스 모니터링, 로깅, 배포 관리
-- **디버깅 어려움**: 여러 서비스에 걸친 요청 추적의 복잡성
-- **초기 개발 비용**: API Gateway, 서비스 디스커버리 등 인프라 구축 필요
-
-
-## 단일체(Monolith), MSA 환경의 그림 비교
-
-### 1. Monolith 아키텍처
 
 ```mermaid
 graph TB
@@ -70,16 +44,34 @@ graph TB
         AIGPU --> DB
     end
     
-    style Client fill:#e1f5fe
-    style DB fill:#fff3e0
-    style MainRoute fill:#f3e5f5
-    style Auth fill:#f3e5f5
-    style Noti fill:#f3e5f5
-    style Storage fill:#f3e5f5
-    style AIGPU fill:#f3e5f5
+    style Client fill:#e1f5fe,color:#000
+    style DB fill:#fff3e0,color:#000
+    style MainRoute fill:#f3e5f5,color:#000
+    style Auth fill:#f3e5f5,color:#000
+    style Noti fill:#f3e5f5,color:#000
+    style Storage fill:#f3e5f5,color:#000
+    style AIGPU fill:#f3e5f5,color:#000
 ```
 
 ### 2. MSA 아키텍처
+
+각 독립 api server: main api server, auth server, noti server, storage server ai gpu server
+
+#### 1. 장점
+
+- **독립적 확장**: 트래픽에 따라 서비스별 스케일링 가능
+- **기술 스택 자유도**: 각 서비스마다 최적화된 기술 선택 가능
+- **장애 격리**: 한 서비스 장애가 전체 시스템에 미치는 영향 최소화
+- **팀별 개발**: 서비스 경계에 따른 독립적 개발/배포
+- **데이터 격리**: 각 서비스가 독립적인 데이터베이스 소유
+
+#### 2. 단점
+
+- **네트워크 복잡성**: 서비스 간 통신으로 인한 레이턴시 증가
+- **분산 시스템 복잡성**: 트랜잭션, 일관성 보장의 어려움
+- **운영 오버헤드**: 다수의 서비스 모니터링, 로깅, 배포 관리
+- **디버깅 어려움**: 여러 서비스에 걸친 요청 추적의 복잡성
+- **초기 개발 비용**: API Gateway, 서비스 디스커버리 등 인프라 구축 필요
 
 ```mermaid
 graph TB
@@ -123,13 +115,13 @@ graph TB
         MainAPI --> StorageService
     end
     
-    style Client2 fill:#e1f5fe
-    style Gateway fill:#ffebee
-    style MainAPI fill:#e8f5e9
-    style AuthService fill:#fff3e0
-    style NotiService fill:#f3e5f5
-    style StorageService fill:#e0f2f1
-    style AIService fill:#fce4ec
+    style Client2 fill:#e1f5fe,color:#000
+    style Gateway fill:#ffebee,color:#000
+    style MainAPI fill:#e8f5e9,color:#000
+    style AuthService fill:#fff3e0,color:#000
+    style NotiService fill:#f3e5f5,color:#000
+    style StorageService fill:#e0f2f1,color:#000
+    style AIService fill:#fce4ec,color:#000
 
     %% 링크 스타일 (선언 순서 인덱스)
     %% 0: Client2->Gateway
@@ -177,14 +169,14 @@ graph LR
         LB2 --> AI1
     end
     
-    style M1 fill:#ffcdd2
-    style M2 fill:#ffcdd2
-    style M3 fill:#ffcdd2
-    style API1 fill:#c8e6c9
-    style AUTH1 fill:#fff9c4
-    style NOTI1 fill:#e1bee7
-    style STORAGE1 fill:#b2dfdb
-    style AI1 fill:#f8bbd0
+    style M1 fill:#ffcdd2,color:#000
+    style M2 fill:#ffcdd2,color:#000
+    style M3 fill:#ffcdd2,color:#000
+    style API1 fill:#c8e6c9,color:#000
+    style AUTH1 fill:#fff9c4,color:#000
+    style NOTI1 fill:#e1bee7,color:#000
+    style STORAGE1 fill:#b2dfdb,color:#000
+    style AI1 fill:#f8bbd0,color:#000
 ```
 
 **주요 차이점:**

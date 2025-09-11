@@ -22,8 +22,8 @@ graph TB
         App -->|"COMMIT/ROLLBACK"| DB
     end
     
-    style DB fill:#c8e6c9
-    style App fill:#fff3e0
+    style DB fill:#c8e6c9,color:#000
+    style App fill:#fff3e0,color:#000
 ```
 
 **특징:**
@@ -68,11 +68,11 @@ graph TB
     PaymentService --> PaymentDB
     MainAPI --> MainDB
     
-    style MainDB fill:#ffcdd2
-    style AuthDB fill:#ffcdd2
-    style StorageDB fill:#ffcdd2
-    style AIDB fill:#ffcdd2
-    style PaymentDB fill:#ffcdd2
+    style MainDB fill:#ffcdd2,color:#000
+    style AuthDB fill:#ffcdd2,color:#000
+    style StorageDB fill:#ffcdd2,color:#000
+    style AIDB fill:#ffcdd2,color:#000
+    style PaymentDB fill:#ffcdd2,color:#000
 ```
 
 **문제점:**
@@ -225,12 +225,12 @@ graph TB
     AuthSlow --> SystemDown
     NotificationFail --> UserComplaint
     
-    style StorageDown fill:#ffcdd2
-    style AIRetry fill:#ffcdd2
-    style AuthSlow fill:#ffcdd2
-    style NotificationFail fill:#ffcdd2
-    style SystemDown fill:#ffcdd2
-    style UserComplaint fill:#ffcdd2
+    style StorageDown fill:#ffcdd2,color:#000
+    style AIRetry fill:#ffcdd2,color:#000
+    style AuthSlow fill:#ffcdd2,color:#000
+    style NotificationFail fill:#ffcdd2,color:#000
+    style SystemDown fill:#ffcdd2,color:#000
+    style UserComplaint fill:#ffcdd2,color:#000
 ```
 
 **장애 전파 과정:**
@@ -268,13 +268,13 @@ graph TB
     AIDB --> AdminView
     MainDB --> AdminView
     
-    style AuthDB fill:#c8e6c9
-    style PaymentDB fill:#ffcdd2
-    style StorageDB fill:#c8e6c9
-    style AIDB fill:#ffcdd2
-    style MainDB fill:#fff3e0
-    style UserView fill:#e1bee7
-    style AdminView fill:#e1bee7
+    style AuthDB fill:#c8e6c9,color:#000
+    style PaymentDB fill:#ffcdd2,color:#000
+    style StorageDB fill:#c8e6c9,color:#000
+    style AIDB fill:#ffcdd2,color:#000
+    style MainDB fill:#fff3e0,color:#000
+    style UserView fill:#e1bee7,color:#000
+    style AdminView fill:#e1bee7,color:#000
 ```
 
 **일관성 문제:**

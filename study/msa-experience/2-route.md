@@ -60,12 +60,12 @@ graph TB
     Gateway --> Route4 --> StorageService
     Gateway --> Route5 --> AIService
     
-    style Gateway fill:#ffebee
-    style Route1 fill:#e8f5e9
-    style Route2 fill:#fff3e0
-    style Route3 fill:#f3e5f5
-    style Route4 fill:#e0f2f1
-    style Route5 fill:#fce4ec
+    style Gateway fill:#ffebee,color:#000
+    style Route1 fill:#e8f5e9,color:#000
+    style Route2 fill:#fff3e0,color:#000
+    style Route3 fill:#f3e5f5,color:#000
+    style Route4 fill:#e0f2f1,color:#000
+    style Route5 fill:#fce4ec,color:#000
 ```
 
 ## 라우팅 규칙 상세 설계
@@ -118,17 +118,17 @@ graph TB
     Nginx --> AUTH
     Nginx --> NOTI
     
-    style Client fill:#e1f5fe
-    style Nginx fill:#ffebee
-    style STORAGE1 fill:#c8e6c9
-    style STORAGE2 fill:#c8e6c9
-    style STORAGE3 fill:#c8e6c9
-    style AI1 fill:#e1bee7
-    style AI2 fill:#e1bee7
-    style AI3 fill:#e1bee7
-    style MAIN fill:#fff3e0
-    style AUTH fill:#f3e5f5
-    style NOTI fill:#e0f2f1
+    style Client fill:#e1f5fe,color:#000
+    style Nginx fill:#ffebee,color:#000
+    style STORAGE1 fill:#c8e6c9,color:#000
+    style STORAGE2 fill:#c8e6c9,color:#000
+    style STORAGE3 fill:#c8e6c9,color:#000
+    style AI1 fill:#e1bee7,color:#000
+    style AI2 fill:#e1bee7,color:#000
+    style AI3 fill:#e1bee7,color:#000
+    style MAIN fill:#fff3e0,color:#000
+    style AUTH fill:#f3e5f5,color:#000
+    style NOTI fill:#e0f2f1,color:#000
 ```
 
 ## 추천하는 라우팅 규칙 설계 원칙
