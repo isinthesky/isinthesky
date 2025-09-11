@@ -156,11 +156,11 @@ graph LR
     
     subgraph "MSA 확장"
         LB2[Load Balancer]
-        API1[Main API x2]
+        API1[Main API x1]
         AUTH1[Auth x1]
-        NOTI1[Notification x3]
+        NOTI1[Notification x1]
         STORAGE1[Storage x2]
-        AI1[AI GPU x1]
+        AI1[AI GPU x3]
         
         LB2 --> API1
         LB2 --> AUTH1
