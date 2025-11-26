@@ -55,7 +55,7 @@ graph TB
 
 ### 2. MSA 아키텍처
 
-각 독립 api server: main api server, auth server, noti server, storage server ai gpu server
+각 독립 api server: main api server, auth server, noti server, storage server, product server, ai gpu server
 
 #### 1. 장점
 
@@ -85,6 +85,7 @@ graph TB
             NotiService[Notification Server<br/>알림 처리]
             StorageService[Storage Server<br/>파일 관리]
             AIService[AI GPU Server<br/>ML 추론]
+            ProductService[Product Server<br/>상품 관리]
         end
         
         subgraph "독립 데이터베이스"
@@ -93,6 +94,7 @@ graph TB
             DB3[(Noti DB)]
             DB4[(Storage DB)]
             DB5[(AI DB)]
+            DB6[(Product DB)]
         end
         
         Client2 --> Gateway
@@ -101,18 +103,21 @@ graph TB
         Gateway --> NotiService
         Gateway --> StorageService
         Gateway --> AIService
+        Gateway --> ProductService
         
         MainAPI --> DB1
         AuthService --> DB2
         NotiService --> DB3
         StorageService --> DB4
         AIService --> DB5
+        ProductService --> DB6
         
         %% 서비스간 직접 HTTP 통신
         MainAPI --> AuthService
         MainAPI --> NotiService
         MainAPI --> AIService
         MainAPI --> StorageService
+        MainAPI --> ProductService
     end
     
     style Client2 fill:#e1f5fe,color:#000
@@ -122,21 +127,24 @@ graph TB
     style NotiService fill:#f3e5f5,color:#000
     style StorageService fill:#e0f2f1,color:#000
     style AIService fill:#fce4ec,color:#000
+    style ProductService fill:#dcedc8,color:#000
 
     %% 링크 스타일 (선언 순서 인덱스)
     %% 0: Client2->Gateway
-    %% 1-5: Gateway->(MainAPI, AuthService, NotiService, StorageService, AIService)
+    %% 1-6: Gateway->(MainAPI, AuthService, NotiService, StorageService, AIService, ProductService)
     linkStyle 1 stroke:#1e88e5
     linkStyle 2 stroke:#1e88e5
     linkStyle 3 stroke:#1e88e5
     linkStyle 4 stroke:#1e88e5
     linkStyle 5 stroke:#1e88e5
+    linkStyle 6 stroke:#1e88e5
 
-    %% 11-14: MainAPI->(AuthService, NotiService, AIService, StorageService)
-    linkStyle 11 stroke:#43a047
-    linkStyle 12 stroke:#43a047
+    %% 13-17: MainAPI->(AuthService, NotiService, AIService, StorageService, ProductService)
     linkStyle 13 stroke:#43a047
     linkStyle 14 stroke:#43a047
+    linkStyle 15 stroke:#43a047
+    linkStyle 16 stroke:#43a047
+    linkStyle 17 stroke:#43a047
 ```
 
 ### 3. 배포 및 확장성 비교
