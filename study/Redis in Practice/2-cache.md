@@ -142,39 +142,13 @@ flowchart TD
 | **다른 기기 로그인** | 기존 세션 유지, 새 키 생성 (device_type 다름) |
 | **토큰 갱신 (Refresh)** | 새 토큰으로 Value 교체, TTL 리셋 |
 
-## 6. 중복 로그인 감지 시퀀스
-
-```mermaid
-sequenceDiagram
-    participant User1 as User (PC1)
-    participant User2 as User (PC2)
-    participant API as API Server
-    participant Redis
-
-    Note over User1,Redis: PC1에서 로그인
-    User1->>API: POST /login
-    API->>Redis: SETEX session:desktop:123 86400 "token_A"
-    API-->>User1: 200 OK (token_A)
-
-    Note over User1,Redis: PC2에서 동일 계정 로그인
-    User2->>API: POST /login
-    API->>Redis: SETEX session:desktop:123 86400 "token_B"
-    Note over Redis: token_A → token_B 덮어쓰기
-    API-->>User2: 200 OK (token_B)
-
-    Note over User1,Redis: PC1에서 API 호출 시도
-    User1->>API: GET /api/data (token_A)
-    API->>Redis: GET session:desktop:123
-    Redis-->>API: "token_B"
-    API->>API: token_A ≠ token_B
-    API-->>User1: 409 Conflict "다른 기기에서 로그인됨"
-```
-
 ---
 
 # 2. i18n 다국어 캐싱
 
 ## 1. 접근 방식 비교
+
+### Next.js JSON 파일
 
 ```mermaid
 flowchart TB
@@ -185,16 +159,22 @@ flowchart TB
         A1_4["빌드 시 번들링"]
     end
 
+    A1_1 --> A1_4
+    A1_2 --> A1_4
+    A1_3 --> A1_4
+
+```
+
+### API + Redis 캐싱
+
+```mermaid
+flowchart TB
     subgraph Approach2["방식 2: API + Redis 캐싱"]
         A2_1["DB: i18n_translations"]
         A2_2["Admin: 번역 관리"]
         A2_3["Redis: 캐시 레이어"]
         A2_4["API: /api/i18n/:lang"]
     end
-
-    A1_1 --> A1_4
-    A1_2 --> A1_4
-    A1_3 --> A1_4
 
     A2_1 --> A2_2
     A2_2 --> A2_3
@@ -284,30 +264,6 @@ HGETALL i18n:ko
 
 # 캐시 갱신 시 TTL 설정 (선택적)
 EXPIRE i18n:ko 3600
-```
-
-## 4. 동기화 전략
-
-```mermaid
-sequenceDiagram
-    participant Admin as Admin UI
-    participant API as Admin API
-    participant DB as PostgreSQL
-    participant Scheduler as Sync Scheduler
-    participant Redis
-
-    Note over Admin,Redis: 방식 1: 즉시 동기화
-    Admin->>API: PUT /admin/i18n/ko/common.welcome
-    API->>DB: UPDATE translations SET value='...'
-    API->>Redis: HSET i18n:ko common.welcome "..."
-    API-->>Admin: 200 OK
-
-    Note over Admin,Redis: 방식 2: 배치 동기화
-    Scheduler->>Scheduler: 매 5분 실행
-    Scheduler->>DB: SELECT * FROM translations WHERE updated_at > last_sync
-    DB-->>Scheduler: 변경된 번역 목록
-    Scheduler->>Redis: HSET i18n:{lang} {key} {value} (다건)
-    Scheduler->>Scheduler: last_sync = now()
 ```
 
 | 동기화 방식 | 트리거 | 장점 | 단점 |
@@ -429,126 +385,4 @@ SET main:charts:revenue '{"labels":["Mon","Tue","Wed"],"data":[100,150,120]}'
 
 # TTL 설정 (5분)
 EXPIRE main:rankings:popular 300
-```
-
-## 4. 갱신 주기 전략
-
-```mermaid
-flowchart TD
-    subgraph Frequency["갱신 빈도"]
-        F1["실시간<br/>(1분 이내)"]
-        F2["준실시간<br/>(5분)"]
-        F3["배치<br/>(1시간)"]
-        F4["일배치<br/>(1일)"]
-    end
-
-    subgraph Data["데이터 종류"]
-        D1["실시간 접속자 수"]
-        D2["인기 순위<br/>판매 통계"]
-        D3["차트 데이터<br/>추천 목록"]
-        D4["주간/월간 리포트"]
-    end
-
-    F1 --> D1
-    F2 --> D2
-    F3 --> D3
-    F4 --> D4
-```
-
-| 갱신 주기 | 대상 데이터 | 구현 방식 | TTL |
-|----------|------------|----------|-----|
-| **1분** | 실시간 접속자, 현재 거래 | Pub/Sub + 증분 업데이트 | 60초 |
-| **5분** | 인기 순위, 판매 통계 | Cron Job | 300초 |
-| **1시간** | 차트 데이터, 추천 목록 | Batch Scheduler | 3600초 |
-| **1일** | 주간/월간 집계 | Daily Batch | 86400초 |
-
-## 5. Cache Miss 처리
-
-```mermaid
-sequenceDiagram
-    participant Client
-    participant API
-    participant Redis
-    participant DB
-
-    Client->>API: GET /api/main/rankings
-    API->>Redis: GET main:rankings:popular
-
-    alt Cache Hit
-        Redis-->>API: 캐시 데이터
-        API-->>Client: 200 OK (from cache)
-    else Cache Miss
-        Redis-->>API: nil
-        API->>DB: SELECT ... ORDER BY sales DESC LIMIT 10
-        DB-->>API: 순위 데이터
-        API->>Redis: SETEX main:rankings:popular 300 "{data}"
-        API-->>Client: 200 OK (from DB)
-    end
-```
-
-### Fallback 전략
-
-```mermaid
-flowchart TD
-    Request["API 요청"] --> Check{"Redis 조회"}
-
-    Check -->|"Hit"| Return["캐시 데이터 반환"]
-    Check -->|"Miss"| DB["DB 조회"]
-
-    DB --> Cache["Redis 저장"]
-    Cache --> Return
-
-    DB -->|"DB 장애"| Stale{"Stale 캐시 존재?"}
-    Stale -->|"Yes"| StaleReturn["만료된 캐시 반환<br/>(Stale-While-Revalidate)"]
-    Stale -->|"No"| Default["기본값 반환<br/>또는 503 에러"]
-```
-
-| 장애 상황 | 대응 전략 |
-|----------|----------|
-| **Redis 장애** | DB 직접 조회 (성능 저하 감수) |
-| **DB 장애** | 만료된 캐시라도 반환 (Stale 캐시) |
-| **양쪽 장애** | 정적 기본값 또는 503 응답 |
-
----
-
-# 4. 캐싱 공통 고려사항
-
-## Cache Invalidation 전략
-
-```mermaid
-flowchart LR
-    subgraph Strategies["무효화 전략"]
-        S1["TTL 기반<br/>시간 만료"]
-        S2["Event 기반<br/>데이터 변경 시"]
-        S3["Manual<br/>관리자 수동"]
-    end
-
-    subgraph Patterns["패턴"]
-        P1["Write-Through"]
-        P2["Write-Behind"]
-        P3["Cache-Aside"]
-    end
-
-    S1 --> P3
-    S2 --> P1
-    S3 --> P2
-```
-
-## 모니터링 지표
-
-| 지표 | 설명 | 정상 범위 |
-|------|------|----------|
-| **Hit Rate** | 캐시 적중률 | > 90% |
-| **Memory Usage** | Redis 메모리 사용량 | < 80% |
-| **Latency** | 응답 지연 시간 | < 1ms (p99) |
-| **Eviction** | 메모리 부족으로 삭제된 키 | 0 (권장) |
-
-```redis
-# 캐시 적중률 확인
-INFO stats
-# keyspace_hits / (keyspace_hits + keyspace_misses) * 100
-
-# 메모리 사용량 확인
-INFO memory
-# used_memory_human
 ```
